@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharata Gen - Autonomous AI Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --success: #10b981;
+            --danger: #ef4444;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e40af);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon {
+            background: var(--primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #f59e0b, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .command-section, .visualizer-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            color: var(--dark);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .command-input {
+            display: flex;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .command-input input {
+            flex: 1;
+            padding: 18px 20px;
+            border: none;
+            font-size: 1.1rem;
+            background: white;
+        }
+        
+        .command-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .command-input button:hover {
+            background: var(--primary-dark);
+        }
+        
+        .command-examples {
+            margin-top: 25px;
+        }
+        
+        .examples-title {
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid #e2e8f0;
+            color: var(--dark);
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .example-card i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+        
+        .visualizer {
+            background: var(--dark);
+            border-radius: 15px;
+            height: 380px;
+            padding: 25px;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .step {
+            display: flex;
+            gap: 15px;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .step-icon {
+            min-width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .step-content {
+            background: #334155;
+            padding: 15px;
+            border-radius: 12px;
+            flex: 1;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--accent);
+        }
+        
+        .step-desc {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+        
+        .features-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            transition: var(--transition);
+            color: var(--dark);
+            border: 2px solid #e2e8f0;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+        
+        .feature-desc {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            border-top: 1px solid #334155;
+            margin-top: 20px;
+        }
+        
+        .powered-by {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tech-logo {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 25px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        
+        /* Animation for process visualization */
+        .visualization-area {
+            position: relative;
+            height: 200px;
+            margin-top: 20px;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .node {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            z-index: 2;
+        }
+        
+        .node-command { background: var(--primary); top: 75px; left: 10%; }
+        .node-process { background: var(--accent); top: 75px; left: 30%; }
+        .node-search { background: #8b5cf6; top: 75px; left: 50%; }
+        .node-confirm { background: var(--success); top: 75px; left: 70%; }
+        .node-complete { background: #ec4899; top: 75px; left: 90%; }
+        
+        .connector {
+            position: absolute;
+            height: 4px;
+            background: var(--primary);
+            z-index: 1;
+            top: 100px;
+        }
+        
+        .active-node {
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 0 10px rgba(37, 99, 235, 0.3);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h1>BHARATA GEN</h1>
+            </div>
+            <p class="tagline">India's first fully autonomous AI platform. Execute complex tasks with a single command - no human intervention required.</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="command-section">
+                <h2 class="section-title"><i class="fas fa-terminal"></i> Command Interface</h2>
+                
+                <div class="command-input">
+                    <input type="text" id="commandInput" placeholder="Enter your command (e.g., Order biryani from Paradise via Swiggy to my home)">
+                    <button id="executeBtn">
+                        <i class="fas fa-paper-plane"></i> Execute
+                    </button>
+                </div>
+                
+                <div class="visualization-area">
+                    <div class="node node-command"><i class="fas fa-comment"></i></div>
+                    <div class="node node-process"><i class="fas fa-cogs"></i></div>
+                    <div class="node node-search"><i class="fas fa-search"></i></div>
+                    <div class="node node-confirm"><i class="fas fa-check-circle"></i></div>
+                    <div class="node node-complete"><i class="fas fa-flag-checkered"></i></div>
+                    
+                    <div class="connector" id="connector1" style="left: 15%; width: 10%;"></div>
+                    <div class="connector" id="connector2" style="left: 35%; width: 10%;"></div>
+                    <div class="connector" id="connector3" style="left: 55%; width: 10%;"></div>
+                    <div class="connector" id="connector4" style="left: 75%; width: 10%;"></div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <div class="command-examples">
+                    <h3 class="examples-title"><i class="fas fa-lightbulb"></i> Try these commands:</h3>
+                    <div class="examples-grid">
+                        <div class="example-card" data-command="Order 2 plate chicken biryani from Paradise Hyderabad via Zomato">
+                            <i class="fas fa-utensils"></i> Food Order
+                        </div>
+                        <div class="example-card" data-command="Book Ola Auto from MG Road to Airport tomorrow 5 AM">
+                            <i class="fas fa-taxi"></i> Transport Booking
+                        </div>
+                        <div class="example-card" data-command="Find 3-star hotels in Goa under ₹5,000 for Diwali week">
+                            <i class="fas fa-hotel"></i> Hotel Search
+                        </div>
+                        <div class="example-card" data-command="Renew my FASTag using ICICI credit card">
+                            <i class="fas fa-tag"></i> FASTag Renewal
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="visualizer-section">
+                <h2 class="section-title"><i class="fas fa-project-diagram"></i> Execution Process</h2>
+                <div class="visualizer">
+                    <div class="process-steps" id="processSteps">
+                        <div class="step">
+                            <div class="step-icon"><i class="fas fa-comment"></i></div>
+                            <div class="step-content">
+                                <div class="step-title">Waiting for Command</div>
+                                <div class="step-desc">Enter a command above to begin autonomous execution</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="features-section">
+            <h2 class="section-title"><i class="fas fa-star"></i> Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h3 class="feature-title">AI-Powered Understanding</h3>
+                    <p class="feature-desc">Advanced NLP understands complex commands in multiple Indian languages including Hinglish, Tamil, and Hindi.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3 class="feature-title">Full Automation</h3>
+                    <p class="feature-desc">Complete tasks end-to-end with zero human intervention - from search to payment confirmation.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="feature-title">Secure Transactions</h3>
+                    <p class="feature-desc">RBI-compliant UPI integration with virtual vault protection for all financial transactions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-language"></i></div>
+                    <h3 class="feature-title">Multilingual Support</h3>
+                    <p class="feature-desc">Interact in 12 Indian languages with voice output for rural accessibility.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3 class="feature-title">App Integration</h3>
+                    <p class="feature-desc">Works with popular Indian platforms like Swiggy, Zomato, Ola, IRCTC, and MakeMyTrip.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-cog"></i></div>
+                    <h3 class="feature-title">Personalization</h3>
+                    <p class="feature-desc">Learns your preferences for payment methods, dietary needs, and frequently used services.</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Bharata Gen - Transforming digital interaction across India</p>
+            <p>एक आदेश, पूरा काम! (One command, task done!)</p>
+            
+            <div class="powered-by">
+                <div class="tech-logo">
+                    <i class="fab fa-python"></i> Python
+                </div>
+                <div class="tech-logo">
+                    <i class="fas fa-robot"></i> BharatGPT
+                </div>
+                <div class="tech-logo">
+                    <i class="fas fa-database"></i> NIC Data Lakes
+                </div>
+                <div class="tech-logo">
+                    <i class="fas fa-cloud"></i> Bhashini Cloud
+                </div>
+                <div class="tech-logo">
+                    <i class="fas fa-code"></i> FastAPI
+                </div>
+            </div>
+            
+            <p style="margin-top: 25px;">© 2023 Bharata Gen | Made with ❤️ for India</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const commandInput = document.getElementById('commandInput');
+            const executeBtn = document.getElementById('executeBtn');
+            const processSteps = document.getElementById('processSteps');
+            const exampleCards = document.querySelectorAll('.example-card');
+            const progressFill = document.getElementById('progressFill');
+            
+            // Example commands
+            exampleCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const command = this.getAttribute('data-command');
+                    commandInput.value = command;
+                    executeCommand(command);
+                });
+            });
+            
+            // Execute button
+            executeBtn.addEventListener('click', function() {
+                const command = commandInput.value.trim();
+                if (command) {
+                    executeCommand(command);
+                } else {
+                    alert('Please enter a command');
+                }
+            });
+            
+            // Enter key in input
+            commandInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const command = commandInput.value.trim();
+                    if (command) {
+                        executeCommand(command);
+                    }
+                }
+            });
+            
+            // Execute command function
+            function executeCommand(command) {
+                // Clear previous steps
+                processSteps.innerHTML = '';
+                
+                // Add user command step
+                addProcessStep('fas fa-user', 'User Command', command, 0);
+                
+                // Show progress
+                progressFill.style.width = '0%';
+                
+                // Reset nodes
+                document.querySelectorAll('.node').forEach(node => {
+                    node.classList.remove('active-node');
+                });
+                document.querySelector('.node-command').classList.add('active-node');
+                
+                // Simulate processing
+                setTimeout(() => {
+                    progressFill.style.width = '20%';
+                    document.querySelector('.node-command').classList.remove('active-node');
+                    document.querySelector('.node-process').classList.add('active-node');
+                    
+                    addProcessStep('fas fa-cogs', 'Processing Command', 'Analyzing intent and extracting entities', 300);
+                    
+                    setTimeout(() => {
+                        progressFill.style.width = '40%';
+                        document.querySelector('.node-process').classList.remove('active-node');
+                        document.querySelector('.node-search').classList.add('active-node');
+                        
+                        addProcessStep('fas fa-search', 'Searching Services', 'Finding relevant vendors and services', 600);
+                        
+                        setTimeout(() => {
+                            progressFill.style.width = '60%';
+                            
+                            // Determine action type
+                            if (command.toLowerCase().includes('order') || command.toLowerCase().includes('food')) {
+                                addProcessStep('fas fa-utensils', 'Placing Food Order', 'Connecting to Swiggy/Zomato API', 900);
+                            } else if (command.toLowerCase().includes('book') || command.toLowerCase().includes('ola') || command.toLowerCase().includes('auto')) {
+                                addProcessStep('fas fa-taxi', 'Booking Transport', 'Connecting to Ola/Uber API', 900);
+                            } else if (command.toLowerCase().includes('hotel') || command.toLowerCase().includes('goa')) {
+                                addProcessStep('fas fa-hotel', 'Searching Hotels', 'Connecting to MakeMyTrip/Goibibo', 900);
+                            } else {
+                                addProcessStep('fas fa-cog', 'Performing Task', 'Executing command components', 900);
+                            }
+                            
+                            setTimeout(() => {
+                                progressFill.style.width = '80%';
+                                document.querySelector('.node-search').classList.remove('active-node');
+                                document.querySelector('.node-confirm').classList.add('active-node');
+                                
+                                addProcessStep('fas fa-check-circle', 'Confirming Details', 'Verifying payment and details', 1200);
+                                
+                                setTimeout(() => {
+                                    progressFill.style.width = '100%';
+                                    document.querySelector('.node-confirm').classList.remove('active-node');
+                                    document.querySelector('.node-complete').classList.add('active-node');
+                                    
+                                    addProcessStep('fas fa-check', 'Task Completed', 'Command executed successfully!', 1500);
+                                    
+                                    // Add final confirmation
+                                    setTimeout(() => {
+                                        if (command.toLowerCase().includes('order') || command.toLowerCase().includes('food')) {
+                                            addProcessStep('fas fa-sms', 'Confirmation Sent', 'SMS sent to your mobile: Order #1234 placed. Amount: ₹598. ETA: 35 min', 1800);
+                                        } else if (command.toLowerCase().includes('book') || command.toLowerCase().includes('ola') || command.toLowerCase().includes('auto')) {
+                                            addProcessStep('fas fa-sms', 'Confirmation Sent', 'SMS sent: Ola Auto booked for tomorrow at 5 AM. Driver: Rajesh (MH12AB1234)', 1800);
+                                        } else if (command.toLowerCase().includes('hotel') || command.toLowerCase().includes('goa')) {
+                                            addProcessStep('fas fa-sms', 'Confirmation Sent', 'Email sent: Hotel Sea View Goa booked for Diwali week. Confirmation #GOA789', 1800);
+                                        } else {
+                                            addProcessStep('fas fa-sms', 'Confirmation Sent', 'Task completed successfully. Details sent to your registered contact', 1800);
+                                        }
+                                    }, 500);
+                                }, 700);
+                            }, 700);
+                        }, 700);
+                    }, 700);
+                }, 500);
+            }
+            
+            // Add a step to the process visualizer
+            function addProcessStep(icon, title, description, delay) {
+                setTimeout(() => {
+                    const step = document.createElement('div');
+                    step.className = 'step';
+                    step.innerHTML = `
+                        <div class="step-icon"><i class="${icon}"></i></div>
+                        <div class="step-content">
+                            <div class="step-title">${title}</div>
+                            <div class="step-desc">${description}</div>
+                        </div>
+                    `;
+                    processSteps.appendChild(step);
+                    
+                    // Scroll to bottom
+                    processSteps.scrollTop = processSteps.scrollHeight;
+                }, delay);
+            }
+            
+            // Initialize with a sample command
+            setTimeout(() => {
+                commandInput.value = "Order 2 plate chicken biryani from Paradise Hyderabad via Zomato";
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
